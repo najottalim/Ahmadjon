@@ -1,4 +1,6 @@
 using Ahmadjon.Api.Data.Contexts;
+using Ahmadjon.Api.Data.IRepositories;
+using Ahmadjon.Api.Data.Repositories;
 using Ahmadjon.Api.Service.Interfaces;
 using Ahmadjon.Api.Service.Services;
 using Microsoft.AspNetCore.Builder;
@@ -43,6 +45,7 @@ namespace Ahmadjon.Api
             });
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
