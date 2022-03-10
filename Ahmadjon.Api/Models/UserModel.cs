@@ -1,8 +1,10 @@
-﻿namespace Ahmadjon.Api.Models
+﻿using Ahmadjon.Api.Models.Common;
+using System;
+
+namespace Ahmadjon.Api.Models
 {
-    public class UserModel
+    public class UserModel : BaseEntity
     {
-        public long Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }    
     }

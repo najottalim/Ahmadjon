@@ -11,8 +11,8 @@ namespace Ahmadjon.Api.Data.Repositories
 #pragma warning disable
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        private NajotTalimDbContext _dbContext;
-        private DbSet<T> _dbSet;
+        internal NajotTalimDbContext _dbContext;
+        protected DbSet<T> _dbSet;
         public GenericRepository(NajotTalimDbContext dbContext)
         {
             _dbContext = dbContext;
