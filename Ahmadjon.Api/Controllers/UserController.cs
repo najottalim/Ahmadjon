@@ -3,6 +3,7 @@ using Ahmadjon.Api.Models;
 using Ahmadjon.Api.Models.Common;
 using Ahmadjon.Api.Service.Interfaces;
 using Ahmadjon.Api.Service.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,13 +23,13 @@ namespace Ahmadjon.Api.Controllers
         }
 
         [HttpPost]
-        public Task<UserModel> Create(UserForCreationViewModel user)
+        public Task<UserModel> Create([FromForm]UserForCreationViewModel user)
         {
             return _userService.CreateAsync(user);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(long id)
+        public async ValueTask<IActionResult> Get(long id)
         {
             var result = await _userService.GetAsync(p => p.Id.Equals(id));
 
@@ -36,13 +37,15 @@ namespace Ahmadjon.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(int pageSize, int pageIndex)
+        public async Task<OkObjectResult> GetAll(int pageSize, int pageIndex)
         {
-            return Ok(await _userService.GetAllAsync(pageSize, pageIndex));
+            IEnumerable<UserModel> users = await _userService.GetAllAsync(pageSize, pageIndex);
+            
+            return Ok(users);
         }
 
         [HttpPut]
-        public Task<UserModel> Update(UserModel model)
+        public Task<UserModel> Update([FromBody]UserModel model)
         {
             return _userService.UpdateAsync(model);
         }
