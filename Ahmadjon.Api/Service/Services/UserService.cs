@@ -1,5 +1,4 @@
 ﻿using Ahmadjon.Api.Data.IRepositories;
-using Ahmadjon.Api.Data.Repositories;
 using Ahmadjon.Api.Enums;
 using Ahmadjon.Api.Models;
 using Ahmadjon.Api.Models.Common;
@@ -8,7 +7,7 @@ using Ahmadjon.Api.Service.Interfaces;
 using Ahmadjon.Api.Service.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -17,9 +16,11 @@ namespace Ahmadjon.Api.Service.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository)
+        private readonly ILoggerService _logger;
+        public UserService(IUserRepository userRepository, ILoggerService service)
         {
             _userRepository = userRepository;
+            _logger = service;
         }
 
         public Task<UserModel> CreateAsync(UserForCreationViewModel model)
@@ -65,7 +66,16 @@ namespace Ahmadjon.Api.Service.Services
 
         public Task<UserModel> UpdateStatusAsync(long id, ItemState state)
         {
-            return _userRepository.UpdateStatusAsync(id, state);
+            try
+            {
+                //return _userRepository.UpdateStatusAsync(id, state);
+                throw new ArgumentNullException();
+            }
+            catch(Exception ex)
+            {
+                _logger.Error(ex, "Error in UpdateStatus");
+                throw;
+            }
         }
     }
 }
